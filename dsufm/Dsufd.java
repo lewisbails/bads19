@@ -145,7 +145,7 @@ public class Dsufd {
      * @throws IllegalArgumentException unless {@code 0 <= p < n}
      */
     public Node find(int p) {
-        // validate(p);
+        validate(p);
         Node currentNode = nodes[p];
         while (currentNode != currentNode.parent) {
             currentNode.parent = currentNode.parent.parent;    // path compression by halving
@@ -316,9 +316,8 @@ public class Dsufd {
 
     // validate that p is a valid index
     private void validate(int p) {
-        int n = nodes.length/2; //we reserve N elements for vacant nodes
-        if (nodes[p].element < 0 || nodes[p].element >= n) {
-            throw new IllegalArgumentException("index " + p + " is not between 0 and " + (n-1));  
+        if (p < 0 || p >= nodes.length) {
+            throw new IllegalArgumentException("index " + p + " is not between 0 and " + (nodes.length-1));  
         }
     }
 
