@@ -55,7 +55,7 @@ public class Dsufd {
         private Node[] shrink(Node[] a){
             // System.out.println("shrinking");
             Node[] b = new Node[a.length/2];
-            for (int i = 0; i< a.length ; i++){
+            for (int i = 0; i< a.length/2 ; i++){
                 b[i] = a[i];
             }
             return b;
@@ -148,11 +148,13 @@ public class Dsufd {
         validate(p);
         Node currentNode = nodes[p];
         while (currentNode != currentNode.parent) {
-            currentNode.parent = currentNode.parent.parent;    // path compression by halving
-            if (currentNode.parent != currentNode.parent.parent){ //if we're more than immediately below the root
-                currentNode.parent.parent.addChild(currentNode);
-                currentNode.parent.deleteChild(currentNode);
-            }
+            //currentNode.parent = currentNode.parent.parent;    // path compression by halving
+    //         if (currentNode.parent != currentNode.parent.parent){ //if we're more than immediately below the root
+				// currentNode.parent.deleteChild(currentNode);
+				// currentNode.parent = currentNode.parent.parent; 
+				// currentNode.parent.parent.addChild(currentNode);
+    //         } 
+            //temp removal of path compression
             currentNode = currentNode.parent;
         }
         return currentNode; //root node
@@ -211,12 +213,14 @@ public class Dsufd {
             rootP.addChild(rootQ);
             rootP.rank++;
         }
+
         count--;
     }
 
     private void deleteElement(int s){
         // System.out.println(nodes[s].element+" "+nodes[s].parent.element);
-        if (nodes[s].parent == nodes[s] && nodes[s].rank == 0){ //singleton, dont need to do anything
+        // if (nodes[s].parent == nodes[s] && nodes[s].rank == 0){ //singleton, dont need to do anything
+        if (nodes[s].parent == nodes[s] && nodes[s].C_size==0){ //parent is itself and it doesnt have children
             // System.out.println(s+" is singleton");
             return;
         }
