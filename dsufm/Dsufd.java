@@ -90,11 +90,15 @@ public class Dsufd {
                     if (G[i]==oldChild){ //found the oldChild in G
                         if (newChild.C_size>0) G[i] = newChild; //can switch out for newChild
                         else {
-                            G[i] = null;
-                            for (int j = i; j<G_size; j++){ //shift children to cover empty spot
-                                G[j] = G[j+1];
-                            }
-                            G_size--;
+                            Node last = G[G_size-1];
+                            G[i] = last; //switch last G for the oldChild
+                            G[G_size-1] = null; // null out old child
+                            G_size--; //reduce G_size
+                            // G[i] = null;
+                            // for (int j = i; j<G_size; j++){ //shift children to cover empty spot
+                            //     G[j] = G[j+1];
+                            // }
+                            // G_size--;
                             if (G_size< (int) G.length/4) G = shrink(G);
                         }
                         return;
@@ -112,11 +116,15 @@ public class Dsufd {
         public void deleteChild(Node oldChild){
             for (int i = 0 ;i<C_size ; i++){
                 if (C[i] == oldChild){ //found the child
-                    C[i] = null;
-                    for (int j = i; j<C_size; j++){ //shift children to cover empty spot
-                        C[j] = C[j+1];
-                    }
+                    Node last = C[C_size-1];
+                    C[i] = last;
+                    C[C_size-1] = null;
                     C_size--;
+                    // C[i] = null;
+                    // for (int j = i; j<C_size; j++){ //shift children to cover empty spot
+                    //     C[j] = C[j+1];
+                    // }
+                    // C_size--;
                     if (C_size == 0) rank--;
                     if (C_size< (int) C.length/4) C = shrink(C);
                 }
@@ -263,17 +271,22 @@ public class Dsufd {
             Node parent = s.parent;
             parent.deleteChild(s);
             int oldID = s.id;
-            vacantNodes[s.id] = null;
-            for (int i = oldID; i<nextVacant; i++){ //shift vacant nodes down
-                try{
-                    vacantNodes[i] = vacantNodes[i+1];
-                    vacantNodes[i].id--;
-                }
-                catch (Exception e){
-                    // System.out.println("probably null pointer");
-                }
-            }
-            nextVacant--;
+            Node last = vacantNodes[nextVacant-1];
+            vacantNodes[oldID] = last; //put last vacant into leafs slot
+            last.id = oldID; //fix id to new slot
+            vacantNodes[nextVacant-1] = null; // null out old last vacant node
+            nextVacant--; // change pointer for next vacant slot 
+            // vacantNodes[s.id] = null; 
+            // for (int i = oldID; i<nextVacant; i++){ //shift vacant nodes down
+            //     try{
+            //         vacantNodes[i] = vacantNodes[i+1];
+            //         vacantNodes[i].id--;
+            //     }
+            //     catch (Exception e){
+            //         // System.out.println("probably null pointer");
+            //     }
+            // }
+            // nextVacant--;
             if (parent.C_size == 0){ //parent is now leaf!
                 // System.out.println(parent.element+" is now leaf: "+"rank is "+parent.rank);
                 parent.rank = 0; //this should have already happened
@@ -294,18 +307,23 @@ public class Dsufd {
                 // System.out.println(parent.element+" is now root");
             }
             // null out now deleted vacant node
-            vacantNodes[oldID] = null;
-            s = null;
-            for (int i = oldID; i<nextVacant; i++){
-                try{
-                    vacantNodes[i] = vacantNodes[i+1];
-                    vacantNodes[i].id--;
-                }
-                catch (Exception e){
-                    // System.out.println("probably null pointer");
-                }
-            }
-            nextVacant--;
+            Node last = vacantNodes[nextVacant-1];
+            vacantNodes[oldID] = last; //put last vacant into leafs slot
+            last.id = oldID; //fix id to new slot
+            vacantNodes[nextVacant-1] = null; // null out old last vacant node
+            nextVacant--; // change pointer for next vacant slot 
+            // vacantNodes[oldID] = null;
+            // s = null;
+            // for (int i = oldID; i<nextVacant; i++){
+            //     try{
+            //         vacantNodes[i] = vacantNodes[i+1];
+            //         vacantNodes[i].id--;
+            //     }
+            //     catch (Exception e){
+            //         // System.out.println("probably null pointer");
+            //     }
+            // }
+            // nextVacant--;
             tidy(parent);
         }
     }
