@@ -5,7 +5,6 @@ public class Dsufd {
 
     private Node[] nodes;
     private Node[] vacantNodes;
-    // private byte[] rank;   // rank[i] = rank of subtree rooted at i (never more than 31)
     private int count;     // number of components
     public int nextVacant; // next slot of vacant node
 
@@ -44,7 +43,6 @@ public class Dsufd {
         }
 
         private Node[] grow(Node[] a){
-            // System.out.println("growing");
             Node[] b = new Node[2*a.length];
             for (int i = 0; i< a.length ; i++){
                 b[i] = a[i];
@@ -53,7 +51,6 @@ public class Dsufd {
         }
 
         private Node[] shrink(Node[] a){
-            // System.out.println("shrinking");
             Node[] b = new Node[a.length/2];
             for (int i = 0; i< a.length/2 ; i++){
                 b[i] = a[i];
@@ -63,10 +60,8 @@ public class Dsufd {
 
         public void addChild(Node child){
             C[C_size++] = child;
-            // System.out.println("child added, csize is "+C_size);
 
             if (child.C_size>0){
-                // System.out.println("new child had children");
                 G[G_size++] = child;
             }
             if (C_size == C.length) C = grow(C);
@@ -74,17 +69,13 @@ public class Dsufd {
         }
 
         public void replaceChild(Node oldChild, Node newChild){
-            // replace in C array
-            // System.out.println("looking through "+C_size+" children");
             for (int i = 0; i<C_size; i++){
                 if (C[i]==oldChild){
-                    // System.out.println("found it");
                     C[i] = newChild;
                     break;
                 }
             }
             // replace in G , or add newChild to G array if necessary
-            // System.out.println("old child had "+oldChild.C_size+" children");
             if (oldChild.C_size>0){ //oldChild has children so should be in the G array
                 for (int i = 0; i<G_size; i++){
                     if (G[i]==oldChild){ //found the oldChild in G
@@ -94,11 +85,6 @@ public class Dsufd {
                             G[i] = last; //switch last G for the oldChild
                             G[G_size-1] = null; // null out old child
                             G_size--; //reduce G_size
-                            // G[i] = null;
-                            // for (int j = i; j<G_size; j++){ //shift children to cover empty spot
-                            //     G[j] = G[j+1];
-                            // }
-                            // G_size--;
                             if (G_size< (int) G.length/4) G = shrink(G);
                         }
                         return;
@@ -120,11 +106,6 @@ public class Dsufd {
                     C[i] = last;
                     C[C_size-1] = null;
                     C_size--;
-                    // C[i] = null;
-                    // for (int j = i; j<C_size; j++){ //shift children to cover empty spot
-                    //     C[j] = C[j+1];
-                    // }
-                    // C_size--;
                     if (C_size == 0) rank--;
                     if (C_size< (int) C.length/4) C = shrink(C);
                 }
@@ -227,7 +208,6 @@ public class Dsufd {
 
     private void deleteElement(int s){
         // System.out.println(nodes[s].element+" "+nodes[s].parent.element);
-        // if (nodes[s].parent == nodes[s] && nodes[s].rank == 0){ //singleton, dont need to do anything
         if (nodes[s].parent == nodes[s] && nodes[s].C_size==0){ //parent is itself and it doesnt have children
             // System.out.println(s+" is singleton");
             return;
@@ -241,9 +221,6 @@ public class Dsufd {
         newNode.G_size = oldNode.G_size;
         newNode.C = oldNode.C;
         newNode.G = oldNode.G;
-        // System.out.println("ready to get C and G arrays");
-        // System.out.println("C len of new node"+newNode.C.length+" C_size is "+newNode.C_size);
-        // System.out.println("G len of new node"+newNode.G.length+" G_size is "+newNode.G_size);
         if (oldNode.parent != oldNode){ //if oldNode wasnt the root
             // System.out.println(oldNode.element+" wasn't root.");
             oldNode.parent.replaceChild(oldNode,newNode); 
@@ -261,8 +238,6 @@ public class Dsufd {
         oldNode = new Node(s);
         oldNode.parent = oldNode;
         nodes[s] = oldNode;
-        // System.out.println(oldNode.element+" "+oldNode.C_size+" "+oldNode.parent.element);
-        // System.out.println(newNode.element+" "+newNode.C_size+" "+newNode.parent.element);
         tidy(newNode);
     }
 
@@ -276,17 +251,6 @@ public class Dsufd {
             last.id = oldID; //fix id to new slot
             vacantNodes[nextVacant-1] = null; // null out old last vacant node
             nextVacant--; // change pointer for next vacant slot 
-            // vacantNodes[s.id] = null; 
-            // for (int i = oldID; i<nextVacant; i++){ //shift vacant nodes down
-            //     try{
-            //         vacantNodes[i] = vacantNodes[i+1];
-            //         vacantNodes[i].id--;
-            //     }
-            //     catch (Exception e){
-            //         // System.out.println("probably null pointer");
-            //     }
-            // }
-            // nextVacant--;
             if (parent.C_size == 0){ //parent is now leaf!
                 // System.out.println(parent.element+" is now leaf: "+"rank is "+parent.rank);
                 parent.rank = 0; //this should have already happened
@@ -312,18 +276,6 @@ public class Dsufd {
             last.id = oldID; //fix id to new slot
             vacantNodes[nextVacant-1] = null; // null out old last vacant node
             nextVacant--; // change pointer for next vacant slot 
-            // vacantNodes[oldID] = null;
-            // s = null;
-            // for (int i = oldID; i<nextVacant; i++){
-            //     try{
-            //         vacantNodes[i] = vacantNodes[i+1];
-            //         vacantNodes[i].id--;
-            //     }
-            //     catch (Exception e){
-            //         // System.out.println("probably null pointer");
-            //     }
-            // }
-            // nextVacant--;
             tidy(parent);
         }
     }
