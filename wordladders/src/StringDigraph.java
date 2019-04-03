@@ -6,18 +6,11 @@ import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.RedBlackBST;
 import java.util.NoSuchElementException;
 
-public class StringDigraph extends Digraph {
+public class StringDigraph {
 	private final int V;
 	private int E;
 	private RedBlackBST<String,Bag<Integer>> graph;
 	private RedBlackBST<String,Bag<Integer>> combinations;
-
-
-	public StringDigraph(){}
-
-	public StringDigraph(int V){}
-
-	public StringDigraph(Digraph G){}
 
  	public StringDigraph(In in) {
  		combinations = new RedBlackBST<>();
@@ -52,7 +45,7 @@ public class StringDigraph extends Digraph {
 
 
     private String[] fourcombos(String word){
-    	char[] chars = Insertion.sort(v.toCharArray());
+    	char[] chars = Insertion.sort(word.toCharArray());
     	String[] combos = new String[5];
     	combos[0] = ""+chars[0]+chars[1]+chars[3]+chars[4];
     	combos[1] = ""+chars[0]+chars[1]+chars[2]+chars[3];
@@ -78,10 +71,6 @@ public class StringDigraph extends Digraph {
     public int outdegree(int v){
     	String key = graph.select(v);
     	return graph.get(key).size();
-    }
-
-    public Digraph reverse(){
-    	return;
     }
 
     public int V(){
