@@ -13,7 +13,7 @@ public class StringDigraph {
 
         try {
             while (in.hasNextLine()){
-                String v = in.readString();
+                String v = in.readLine();
                 graph.put(v,new SET<>());
             }
             for (String v : graph.keys()){

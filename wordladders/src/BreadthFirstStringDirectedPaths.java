@@ -210,15 +210,17 @@ public class BreadthFirstStringDirectedPaths {
             String v = from_to[1];
             BreadthFirstStringDirectedPaths bfs = new BreadthFirstStringDirectedPaths(G, G.rank(s));
             if (bfs.hasPathTo(G.rank(v))) {
-                StdOut.printf("%s to %s (%d):  ", s, v, bfs.distTo(G.rank(v)));
-                for (int x : bfs.pathTo(G.rank(v))) {
-                    if (x == G.rank(s)) StdOut.print(G.key(x));
-                    else        StdOut.print("->" + G.key(x));
-                }
-                StdOut.println();
+                StdOut.println(bfs.distTo(G.rank(v)));
+                // StdOut.printf("%s to %s (%d):  ", s, v, bfs.distTo(G.rank(v)));
+                // for (int x : bfs.pathTo(G.rank(v))) {
+                //     if (x == G.rank(s)) StdOut.print(G.key(x));
+                //     else        StdOut.print("->" + G.key(x));
+                // }
+                // StdOut.println();
             }
             else {
-                StdOut.printf("%s to %s (-1):  not connected\n", s, v);
+                // StdOut.printf("%s to %s (-1):  not connected\n", s, v);
+                StdOut.println("-1");
             }
         }
     }
