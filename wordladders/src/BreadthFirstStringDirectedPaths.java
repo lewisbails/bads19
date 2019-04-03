@@ -202,23 +202,24 @@ public class BreadthFirstStringDirectedPaths {
         StringDigraph G = new StringDigraph(in);
         // StdOut.println(G);
 
-        String s =args[1];
-        BreadthFirstStringDirectedPaths bfs = new BreadthFirstStringDirectedPaths(G, G.rank(s));
-
-        for (int v = 0; v < G.V(); v++) {
-            if (bfs.hasPathTo(v)) {
-                StdOut.printf("%s to %s (%d):  ", s, G.key(v), bfs.distTo(v));
-                for (int x : bfs.pathTo(v)) {
+        In in_queries = new In(args[1]);
+        String[] from_to;
+        while (in_queries.hasNextLine()){
+            from_to = in_queries.readLine().split(" ");
+            String s = from_to[0];
+            String v = from_to[1];
+            BreadthFirstStringDirectedPaths bfs = new BreadthFirstStringDirectedPaths(G, G.rank(s));
+            if (bfs.hasPathTo(G.rank(v))) {
+                StdOut.printf("%s to %s (%d):  ", s, v, bfs.distTo(G.rank(v)));
+                for (int x : bfs.pathTo(G.rank(v))) {
                     if (x == G.rank(s)) StdOut.print(G.key(x));
                     else        StdOut.print("->" + G.key(x));
                 }
                 StdOut.println();
             }
-
             else {
-                StdOut.printf("%s to %s (-):  not connected\n", s, G.key(v));
+                StdOut.printf("%s to %s (-1):  not connected\n", s, v);
             }
-
         }
     }
 

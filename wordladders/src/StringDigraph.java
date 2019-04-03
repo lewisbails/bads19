@@ -23,7 +23,7 @@ public class StringDigraph {
                 // System.out.println(v);
                 // System.out.println(lastfour);
                 for (String combination : fourcombos(v)){
-                    System.out.println(combination);
+                    // System.out.println(combination);
                     if (!combinations.contains(combination)){
                         combinations.put(combination,new SET<>());
                     }
