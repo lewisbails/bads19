@@ -92,30 +92,30 @@ public class StringDigraph {
         return graph.select(v);
     }
 
-    public void ranks(){
-        for (String key : graph.keys()){
-            System.out.println(key+" "+graph.rank(key));
-        }
-    }
+    // public void ranks(){
+    //     for (String key : graph.keys()){
+    //         System.out.println(key+" "+graph.rank(key));
+    //     }
+    // }
 
-    public void joins(){
-        for (String key : graph.keys()){
-            System.out.println(key+": ");
-            for (Integer item : graph.get(key)){
-                System.out.print(item+" ");
-            }
-            System.out.println("");
-        }
-    }
+    // public void joins(){
+    //     for (String key : graph.keys()){
+    //         System.out.println(key+": ");
+    //         for (Integer item : graph.get(key)){
+    //             System.out.print(item+" ");
+    //         }
+    //         System.out.println("");
+    //     }
+    // }
 
-    public void combos(){
-        for (String key : combinations.keys()){
-            System.out.println(key+": ");
-            for (Integer item : combinations.get(key)){
-                System.out.print(item+" ");
-            }
-            System.out.println("");
-        }
-    }
+    // public void combos(){
+    //     for (String key : combinations.keys()){
+    //         System.out.println(key+": ");
+    //         for (Integer item : combinations.get(key)){
+    //             System.out.print(item+" ");
+    //         }
+    //         System.out.println("");
+    //     }
+    // }
 
 }
