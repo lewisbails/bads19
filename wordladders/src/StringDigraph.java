@@ -26,8 +26,6 @@ public class StringDigraph {
                 String[] s = v.substring(1).split("");
                 Insertion.sort(s);
                 String lastfour = s[0]+s[1]+s[2]+s[3];
-
-                String lastfour = new String();
                 if (!graph.contains(v)){
                 	graph.put(v,new Bag<>());
                 	for (String combination : fourcombos(v)){
