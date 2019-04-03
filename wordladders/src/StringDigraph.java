@@ -45,7 +45,8 @@ public class StringDigraph {
 
 
     private String[] fourcombos(String word){
-    	char[] chars = Insertion.sort(word.toCharArray());
+    	Char[] unsortedChars = word.toCharArray();
+    	char[] chars = Insertion.sort(unsortedChars);
     	String[] combos = new String[5];
     	combos[0] = ""+chars[0]+chars[1]+chars[3]+chars[4];
     	combos[1] = ""+chars[0]+chars[1]+chars[2]+chars[3];
