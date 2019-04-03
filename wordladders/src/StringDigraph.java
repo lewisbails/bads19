@@ -1,9 +1,9 @@
 
-import edu.prineton.cs.algs4.Insertion;
-import edu.prineton.cs.algs4.Digraph;
-import edu.prineton.cs.algs4.Bag;
-import edu.prineton.cs.algs4.In;
-import edu.prineton.cs.algs4.RedBlackBST;
+import edu.princeton.cs.algs4.Insertion;
+import edu.princeton.cs.algs4.Digraph;
+import edu.princeton.cs.algs4.Bag;
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.RedBlackBST;
 
 public class StringDigraph extends Digraph {
 	private final int V;
