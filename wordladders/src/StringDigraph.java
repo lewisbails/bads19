@@ -1,44 +1,44 @@
 
-import edu.princeton.cs.algs4.Insertion;
-import edu.princeton.cs.algs4.Digraph;
-import edu.princeton.cs.algs4.Bag;
-import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.RedBlackBST;
+import edu.princeton.cs.algs4.*;
 import java.util.NoSuchElementException;
 
 public class StringDigraph {
 	private final int V;
 	private int E;
-	private RedBlackBST<String,Bag<Integer>> graph;
-	private RedBlackBST<String,Bag<Integer>> combinations;
-
+	private RedBlackBST<String,SET<Integer>> graph;
+	private RedBlackBST<String,SET<Integer>> combinations;
  	public StringDigraph(In in) {
  		combinations = new RedBlackBST<>();
  		graph = new RedBlackBST<>();
 
         try {
-            this.V = in.readInt();
-            if (V < 0) throw new IllegalArgumentException("number of vertices in a Digraph must be nonnegative");
-            int E = in.readInt();
-            if (E < 0) throw new IllegalArgumentException("number of edges in a Digraph must be nonnegative");
-            for (int i = 0; i < E; i++) {
+            while (in.hasNextLine()){
                 String v = in.readString();
+                graph.put(v,new SET<>());
+            }
+            for (String v : graph.keys()){
                 String[] s = v.substring(1).split("");
                 Insertion.sort(s);
                 String lastfour = s[0]+s[1]+s[2]+s[3];
-                if (!graph.contains(v)){
-                	graph.put(v,new Bag<>());
-                	for (String combination : fourcombos(v)){
-                		if (!combinations.contains(combination)){
-                			combinations.put(combination,new Bag<>());
-            			}
-            			combinations.get(combination).add(graph.rank(v));
-                	}
-                	if (combinations.contains(lastfour)){
-                		graph.put(v,combinations.get(lastfour));
-                	}
+                // System.out.println(v);
+                // System.out.println(lastfour);
+                for (String combination : fourcombos(v)){
+                    System.out.println(combination);
+                    if (!combinations.contains(combination)){
+                        combinations.put(combination,new SET<>());
+                    }
+                    if (!combinations.get(combination).contains(graph.rank(v))){
+                        combinations.get(combination).add(graph.rank(v));
+                    }
+                }
+                if (combinations.contains(lastfour)){
+                    graph.put(v,combinations.get(lastfour));
                 }
             }
+            V = graph.size();
+            // ranks();
+            // combos();
+            // joins();
         }
         catch (NoSuchElementException e) {
             throw new IllegalArgumentException("invalid input format in Digraph constructor", e);
@@ -63,6 +63,10 @@ public class StringDigraph {
 		return graph.get(key); //exposes invarient, fix it
     }
 
+    public Iterable<Integer> adj(String v){
+        return graph.get(v);
+    }
+ 
     public int E(){
     	return E;
     }
@@ -72,8 +76,46 @@ public class StringDigraph {
     	return graph.get(key).size();
     }
 
+    public int outdegree(String v){
+        return graph.get(v).size();
+    }
+
     public int V(){
     	return V;
+    }
+
+    public int rank(String key){
+        return graph.rank(key);
+    }
+
+    public String key(int v){
+        return graph.select(v);
+    }
+
+    public void ranks(){
+        for (String key : graph.keys()){
+            System.out.println(key+" "+graph.rank(key));
+        }
+    }
+
+    public void joins(){
+        for (String key : graph.keys()){
+            System.out.println(key+": ");
+            for (Integer item : graph.get(key)){
+                System.out.print(item+" ");
+            }
+            System.out.println("");
+        }
+    }
+
+    public void combos(){
+        for (String key : combinations.keys()){
+            System.out.println(key+": ");
+            for (Integer item : combinations.get(key)){
+                System.out.print(item+" ");
+            }
+            System.out.println("");
+        }
     }
 
 }
