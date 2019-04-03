@@ -47,6 +47,8 @@
  *  @author Robert Sedgewick
  *  @author Kevin Wayne
  */
+
+import edu.princeton.cs.algs4.*;
 public class BreadthFirstStringDirectedPaths {
     private static final int INFINITY = Integer.MAX_VALUE;
     private boolean[] marked;  // marked[v] = is there an s->v path?
