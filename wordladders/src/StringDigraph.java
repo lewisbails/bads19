@@ -55,10 +55,6 @@ public class StringDigraph {
     	return combos;
     }
 
-    public void addEdge(int v, int w){
-    	return;
-    }
-
     public Iterable<Integer> adj(int v){
 		String key = graph.select(v);
 		return graph.get(key); //exposes invarient, fix it
