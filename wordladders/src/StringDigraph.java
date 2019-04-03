@@ -23,7 +23,7 @@ public class StringDigraph {
             if (E < 0) throw new IllegalArgumentException("number of edges in a Digraph must be nonnegative");
             for (int i = 0; i < E; i++) {
                 String v = in.readString();
-                String[] s = v.substring(1).split("")
+                String[] s = v.substring(1).split("");
                 Insertion.sort(s);
                 String lastfour = s[0]+s[1]+s[2]+s[3];
 
