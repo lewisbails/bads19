@@ -23,7 +23,7 @@ public class StringDigraph {
             if (E < 0) throw new IllegalArgumentException("number of edges in a Digraph must be nonnegative");
             for (int i = 0; i < E; i++) {
                 String v = in.readString();
-                String lastfour = new String(Insertion.sort(v.substring(1).toCharArray()));
+                String lastfour = new String(Insertion.sort(v.substring(1).split('')));
                 if (!graph.contains(v)){
                 	graph.put(v,new Bag<>());
                 	for (String combination : fourcombos(v)){
@@ -45,8 +45,7 @@ public class StringDigraph {
 
 
     private String[] fourcombos(String word){
-    	Char[] unsortedChars = word.toCharArray();
-    	char[] chars = Insertion.sort(unsortedChars);
+    	String[] chars = Insertion.sort(word.split(''));
     	String[] combos = new String[5];
     	combos[0] = ""+chars[0]+chars[1]+chars[3]+chars[4];
     	combos[1] = ""+chars[0]+chars[1]+chars[2]+chars[3];
