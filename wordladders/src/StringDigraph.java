@@ -4,6 +4,7 @@ import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.Bag;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.RedBlackBST;
+import java.util.NoSuchElementException;
 
 public class StringDigraph extends Digraph {
 	private final int V;
@@ -11,6 +12,12 @@ public class StringDigraph extends Digraph {
 	private RedBlackBST<String,Bag<Integer>> graph;
 	private RedBlackBST<String,Bag<Integer>> combinations;
 
+
+	public StringDigraph(){}
+
+	public StringDigraph(int V){}
+
+	public StringDigraph(Digraph G){}
 
  	public StringDigraph(In in) {
  		combinations = new RedBlackBST<>();
@@ -45,7 +52,7 @@ public class StringDigraph extends Digraph {
 
 
     private String[] fourcombos(String word){
-    	Char[] chars = Insertion.sort(v.toCharArray());
+    	char[] chars = Insertion.sort(v.toCharArray());
     	String[] combos = new String[5];
     	combos[0] = ""+chars[0]+chars[1]+chars[3]+chars[4];
     	combos[1] = ""+chars[0]+chars[1]+chars[2]+chars[3];
@@ -55,11 +62,11 @@ public class StringDigraph extends Digraph {
     	return combos;
     }
 
-    private void addEdge(int v, int w){
+    public void addEdge(int v, int w){
     	return;
     }
 
-    private Iterable<Integer> adj(int v){
+    public Iterable<Integer> adj(int v){
 		String key = graph.select(v);
 		return graph.get(key); //exposes invarient, fix it
     }
