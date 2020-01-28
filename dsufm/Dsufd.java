@@ -1,3 +1,9 @@
+// Union-find with constant amortized time deletion.
+// Implementation of: http://www.imm.dtu.dk/~inge/uf.pdf
+
+
+
+
 import edu.princeton.cs.algs4.*;
 import java.util.Scanner;
 
